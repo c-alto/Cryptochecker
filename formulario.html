@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoChecker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            max-width: 400px;
+            margin: auto;
+            background: linear-gradient(to bottom, #f6f6f6, #dcdcdc);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ccc; /* Nuevo estilo: borde */
+        }
+
+        /* Resto del código permanece igual */
+        /* ... */
+
+        /* Estilos para el formulario */
+        form {
+            text-align: left;
+            margin-bottom: 30px;  
+            border: 1px solid #ddd; /* Nuevo estilo: borde */
+            padding: 20px; /* Nuevo estilo: espacio interno */
+            background-color: #fff; /* Nuevo estilo: fondo blanco */
+            border-radius: 10px; /* Nuevo estilo: bordes redondeados */
+        }
+
+        /* Estilos para los campos de texto y etiquetas */
+        label, input {
+            font-size: 1em;
+            margin-bottom: 10px;
+            display: block;
+            width: 100%;
+            color: #555555;
+            border: 1px solid #ccc; /* Nuevo estilo: borde */
+            padding: 8px; /* Nuevo estilo: espacio interno */
+            border-radius: 5px; /* Nuevo estilo: bordes redondeados */
+        }
+
+        /* Estilos para el botón */
+        button {
+            font-size: 1em;
+            background-color: #2b9c31;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #247d26;
+        }
+
+        /* Estilos de mensajes de éxito y error */
+        .success-message, .error-message {
+            font-size: 1em;
+        }
+
+        .success-message {
+            color: #2b9c31;
+        }
+
+        .error-message {
+            color: #ff0000;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <h1><i class="fas fa-chart-line"></i> CryptoChecker</h1>
+    <p>Para conocer nuestras actualizaciones e información constante, por favor ingrese su nombre y correo electrónico:</p>
+    <form action="#" method="post" id="formulario">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <span class="error-message" id="error-nombre"></span>
+        
+        <label for="correo">Correo Electrónico:</label>
+        <input type="email" id="correo" name="correo" required>
+        <span class="error-message" id="error-correo"></span>
+        
+        <button type="submit"><i class="fas fa-paper-plane"></i>Registrar</button>
+    </form>
+
+    <div class="success-message" id="exito"></div>
+    <div class="gracias" id="gracias" style="display:none;">Gracias. En un momento se le enviará información.</div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#formulario').submit(function(e) {
+                e.preventDefault();
+                var username = $('#nombre').val();
+                var correo = $('#correo').val();
+                var errorNombre = $('#error-nombre');
+                var errorCorreo = $('#error-correo');
+                var exito = $('#exito');
+                var gracias = $('#gracias');
+
+                if (username === "") {
+                    errorNombre.text("Por favor, ingrese un nombre de usuario.");
+                } else {
+                    errorNombre.text("");
+                }
+
+                if (correo === "") {
+                    errorCorreo.text("Por favor, ingrese un correo electrónico.");
+                } else if (!validateEmail(correo)) {
+                    errorCorreo.text("Por favor, ingrese un correo electrónico válido.");
+                } else {
+                    errorCorreo.text("");
+                }
+
+                if (username !== "" && correo !== "" && validateEmail(correo)) {
+                    gracias.show();
+
+                    $('body').css('background-color', '#2b9c31');
+                }
+            });
+
+            function validateEmail(email) {
+                var re = /\S+@\S+\.\S+/;
+                return re.test(email);
+            }
+        });
+    </script>
+</body>
+</html>
